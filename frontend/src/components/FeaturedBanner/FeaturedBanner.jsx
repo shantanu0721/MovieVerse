@@ -19,28 +19,39 @@ function FeaturedBanner() {
 
   if (!movie) {
     return (
-      <section className="h-[70vh] bg-zinc-900 flex items-center justify-center text-white">
+      <section className="h-[80vh] bg-zinc-900 flex items-center justify-center text-white">
         <h1 className="text-4xl font-bold">Loading...</h1>
       </section>
     );
   }
 
   return (
-    <section className="h-[70vh] bg-zinc-900 flex items-center justify-center text-white">
-      <div className="text-center max-w-3xl px-6">
+    <section
+      className="relative h-[80vh] bg-cover bg-center"
+      style={{
+        backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
+      }}
+    >
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/60"></div>
 
-        <h1 className="text-5xl font-bold mb-6">
-          {movie.title}
-        </h1>
+      {/* Content */}
+      <div className="relative z-10 h-full flex items-center px-16">
+        <div className="max-w-2xl">
 
-        <p className="text-yellow-400 text-xl mb-4">
-          ⭐ {movie.vote_average.toFixed(1)}
-        </p>
+          <h1 className="text-6xl font-bold text-white mb-6">
+            {movie.title}
+          </h1>
 
-        <p className="text-gray-300 text-lg leading-8">
-          {movie.overview}
-        </p>
+          <p className="text-yellow-400 text-xl mb-4">
+            ⭐ {movie.vote_average.toFixed(1)}
+          </p>
 
+          <p className="text-gray-200 text-lg leading-8">
+            {movie.overview}
+          </p>
+
+        </div>
       </div>
     </section>
   );

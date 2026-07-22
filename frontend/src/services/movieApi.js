@@ -8,5 +8,9 @@ export async function getTrendingMovies() {
 export async function getFeaturedMovie() {
   const response = await tmdb.get("/trending/movie/week");
 
-  return response.data.results[0];
+  const movies = response.data.results;
+
+  const randomIndex = Math.floor(Math.random() * movies.length);
+
+  return movies[randomIndex];
 }
