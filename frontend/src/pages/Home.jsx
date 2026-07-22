@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import FeaturedBanner from "../components/FeaturedBanner/FeaturedBanner";
 import Navbar from "../components/Navbar/Navbar";
 import Hero from "../components/Hero/Hero";
 import SectionTitle from "../components/SectionTitle/SectionTitle";
@@ -27,7 +27,7 @@ function Home() {
     <div className="min-h-screen bg-black text-white scrollbar-hide">
       <Navbar />
 
-      <Hero />
+      <FeaturedBanner />
 
       <SectionTitle title="🔥 Trending Movies" />
       <MovieRow movies={trendingMovies} />
