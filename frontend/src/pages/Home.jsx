@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import FeaturedBanner from "../components/FeaturedBanner/FeaturedBanner";
+import GenreExplorer from "../components/GenreExplorer/GenreExplorer";
 import Navbar from "../components/Navbar/Navbar";
-import Hero from "../components/Hero/Hero";
+// import Hero from "../components/Hero/Hero";
 import SectionTitle from "../components/SectionTitle/SectionTitle";
 import MovieRow from "../components/MovieRow/MovieRow";
+// import genres from "../../constants/genres";
 
 import { getTrendingMovies } from "../services/movieApi";
 
@@ -31,6 +33,8 @@ function Home() {
 
       <SectionTitle title="🔥 Trending Movies" />
       <MovieRow movies={trendingMovies} />
+
+      <GenreExplorer />
 
       {/* We'll add these back in the next modules */}
 

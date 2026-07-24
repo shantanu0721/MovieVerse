@@ -6,6 +6,8 @@ import Genres from "./pages/Genres";
 import Search from "./pages/Search";
 import Watchlist from "./pages/Watchlist";
 import Favorites from "./pages/Favorites";
+import GenreMovies from "./pages/GenreMovies";
+import MovieDetails from "./pages/MovieDetails";
 
 function App() {
   return (
@@ -24,6 +26,10 @@ function App() {
         <Route path="/watchlist" element={<Watchlist />} />
 
         <Route path="/favorites" element={<Favorites />} />
+
+        <Route path="/genres/:genreId" element={<GenreMovies />} />
+
+        <Route path="/movie/:movieId" element={<MovieDetails />} />
 
       </Routes>
 
