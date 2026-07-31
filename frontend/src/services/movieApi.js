@@ -94,3 +94,7 @@ export async function searchMovies(query) {
 
   return response.data.results;
 }
+export async function getMovieById(movieId) {
+  const response = await tmdb.get(`/movie/${movieId}`);
+  return response.data;
+}

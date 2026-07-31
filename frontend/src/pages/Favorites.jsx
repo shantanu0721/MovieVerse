@@ -1,14 +1,43 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import MovieGrid from "../components/MovieGrid/MovieGrid";
-import { getFavorites } from "../utils/favorites";
+import api from "../services/api";
+import { getMovieById } from "../services/movieApi";
 
 function Favorites() {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    setMovies(getFavorites());
-  }, []);
+  async function fetchFavorites() {
+    try {
+      const response = await api.get("/favorites/");
+
+      const movieDetails = await Promise.all(
+        response.data.map((item) =>
+          getMovieById(item.movie_id)
+        )
+      );
+
+      setMovies(movieDetails);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  fetchFavorites();
+}, []);
+
+const removeFromFavorites = async (movieId) => {
+  try {
+    await api.delete(`/favorites/${movieId}`);
+
+    setMovies((prev) =>
+      prev.filter((movie) => movie.id !== movieId)
+    );
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -30,7 +59,10 @@ function Favorites() {
             </p>
           </div>
         ) : (
-          <MovieGrid movies={movies} />
+          <MovieGrid
+  movies={movies}
+  onRemove={removeFromFavorites}
+/>
         )}
       </main>
     </div>

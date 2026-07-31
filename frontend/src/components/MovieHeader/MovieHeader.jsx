@@ -4,10 +4,6 @@ import {
   toggleWatchlist,
 } from "../../utils/watchlist";
 
-import {
-  isFavorite,
-  toggleFavorite,
-} from "../../utils/favorites";
 
 const IMAGE_BASE = "https://image.tmdb.org/t/p/original";
 
@@ -15,14 +11,16 @@ function MovieHeader({
   movie,
   trailer,
   onTrailerClick,
+  onAddToWatchlist,
+  onAddToFavorites,
   children,
 }) {
   const [saved, setSaved] = useState(false);
-  const [favorite, setFavorite] = useState(false);
+  
 
     useEffect(() => {
     setSaved(isInWatchlist(movie.id));
-    setFavorite(isFavorite(movie.id));
+    
   }, [movie]);
   const backdrop = movie.backdrop_path
     ? `${IMAGE_BASE}${movie.backdrop_path}`
@@ -108,10 +106,7 @@ function MovieHeader({
                 )}
 
                 <button
-                  onClick={() => {
-                    toggleWatchlist(movie);
-                    setSaved(isInWatchlist(movie.id));
-                  }}
+                  onClick={onAddToWatchlist}
                   className={`px-7 py-3 rounded-xl font-semibold transition ${
                     saved
                       ? "bg-green-600 hover:bg-green-700"
@@ -121,17 +116,10 @@ function MovieHeader({
                   {saved ? "✔ In Watchlist" : "+ Add to Watchlist"}
                 </button>
                 <button
-                  onClick={() => {
-                    toggleFavorite(movie);
-                    setFavorite(isFavorite(movie.id));
-                  }}
-                  className={`px-7 py-3 rounded-xl font-semibold transition ${
-                    favorite
-                      ? "bg-pink-600 hover:bg-pink-700"
-                      : "bg-zinc-800 hover:bg-zinc-700"
-                  }`}
-                >
-                  {favorite ? "❤️ In Favorites" : "🤍 Add to Favorites"}
+                  onClick={onAddToFavorites}
+                  className="px-7 py-3 rounded-xl font-semibold bg-zinc-800 hover:bg-zinc-700 transition"
+>
+❤️ Add to Favorites
                 </button>
               </div>
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import api from "../services/api";
 import Navbar from "../components/Navbar/Navbar";
 import MovieHeader from "../components/MovieHeader/MovieHeader";
 import TrailerModal from "../components/TrailerModal/TrailerModal";
@@ -69,6 +69,27 @@ function MovieDetails() {
     });
   }, [movieId]);
 
+  const addToWatchlist = async () => {
+  try {
+    await api.post(`/watchlist/${movie.id}`);
+
+    alert("Movie added to Watchlist ✅");
+  } catch (error) {
+    alert(error.response?.data?.detail || "Something went wrong");
+  }
+};
+
+  const addToFavorites = async () => {
+  try {
+    await api.post(`/favorites/${movie.id}`);
+    alert("Movie added to Favorites ❤️");
+  } catch (error) {
+    alert(
+      error.response?.data?.detail || "Something went wrong"
+    );
+  }
+};
+
   if (loading) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
@@ -95,6 +116,8 @@ function MovieDetails() {
         movie={movie}
         trailer={trailer}
         onTrailerClick={() => setShowTrailer(true)}
+        onAddToWatchlist={addToWatchlist}
+        onAddToFavorites={addToFavorites}
       >
         <WatchProviders providers={providers} />
 

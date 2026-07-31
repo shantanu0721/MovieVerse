@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 
-function MovieCard({ movie }) {
+function MovieCard({
+  movie,
+  onRemove,
+}) {
   const navigate = useNavigate();
 
   return (
@@ -25,6 +28,19 @@ function MovieCard({ movie }) {
         <p className="text-yellow-400 text-sm mt-1">
           ⭐ {movie.vote_average.toFixed(1)}
         </p>
+
+        {onRemove && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onRemove(movie.id);
+              }}
+              className="mt-3 w-full bg-red-600 hover:bg-red-700 py-2 rounded-lg text-sm font-medium transition"
+            >
+              Remove
+            </button>
+          )}
+        
       </div>
     </div>
   );

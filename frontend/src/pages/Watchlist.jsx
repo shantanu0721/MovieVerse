@@ -1,15 +1,41 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import MovieGrid from "../components/MovieGrid/MovieGrid";
-import { getWatchlist } from "../utils/watchlist";
+
+import api from "../services/api";
+import { getMovieById } from "../services/movieApi";
 
 function Watchlist() {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    setMovies(getWatchlist());
-  }, []);
+  async function fetchWatchlist() {
+    try {
+      const response = await api.get("/watchlist/");
+      const movieDetails = await Promise.all(
+            response.data.map((item) => getMovieById(item.movie_id))
+          );
 
+setMovies(movieDetails);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  fetchWatchlist();
+}, []);
+
+const removeFromWatchlist = async (movieId) => {
+  try {
+    await api.delete(`/watchlist/${movieId}`);
+
+    setMovies((prev) =>
+      prev.filter((movie) => movie.id !== movieId)
+    );
+  } catch (error) {
+    console.error(error);
+  }
+};
   return (
     <div className="min-h-screen bg-black text-white">
       <Navbar />
@@ -30,7 +56,10 @@ function Watchlist() {
             </p>
           </div>
         ) : (
-          <MovieGrid movies={movies} />
+          <MovieGrid
+              movies={movies}
+              onRemove={removeFromWatchlist}
+            />
         )}
       </main>
     </div>
